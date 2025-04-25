@@ -14,7 +14,17 @@
   <script type="module" src="script.js"></script>
 </head>
 <body class="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen transition-colors duration-500 px-4 py-8">
-  
+  <audio id="clickSound" src="click.mp3" preload="auto"></audio>
+  <div id="authSection">
+  <button onclick="signInWithGoogle()">Sign in with Google</button>
+</div>
+<div id="userSection" class="hidden">
+  <p id="userName"></p>
+  <button onclick="signOut()">Sign out</button>
+  <input id="taskInput" placeholder="Enter a task..." />
+  <button onclick="addTask()">Add Task</button>
+  <ul id="userTaskList"></ul>
+</div>
 <!-- Auth Section -->
 <div id="authSection" class="text-center mt-10">
   <button onclick="signInWithGoogle()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow">
