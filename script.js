@@ -146,5 +146,8 @@ function editTask(id, oldText, uid) {
   if (newText && newText.trim() !== oldText) {
     update(ref(db, "tasks/" + uid + "/" + id), { text: newText.trim() });
     playClick();
+    window.signInWithGoogle = signInWithGoogle;
+window.signOut = signOut;
+window.addTask = addTask;
   }
 }
