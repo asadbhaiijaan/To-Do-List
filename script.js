@@ -151,3 +151,6 @@ window.signOut = signOut;
 window.addTask = addTask;
   }
 }
+window.signInWithGoogle = signInWithGoogle;
+window.signOut = signOut;
+window.addTask = addTask;
