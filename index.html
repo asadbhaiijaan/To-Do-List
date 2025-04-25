@@ -1,0 +1,61 @@
+04.25 7:55 PM
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Premium To-Do</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+</head>
+<body class="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen transition-colors duration-500 px-4 py-8">
+
+  <div class="max-w-xl mx-auto p-6 rounded-3xl shadow-2xl bg-gray-100 dark:bg-gray-900 relative">
+    
+    <!-- Theme toggle -->
+    <button onclick="toggleTheme()" class="absolute top-4 right-4 text-xl text-yellow-500 dark:text-white transition">
+      <span id="themeIcon">☀️</span>
+    </button>
+
+    <h1 class="text-3xl font-bold mb-6 text-center text-teal-500">Public To-Do List</h1>
+
+    <ul id="publicTaskList" class="space-y-3 mb-6"></ul>
+
+    <div id="authSection" class="text-center mt-8">
+      <button onclick="signInWithGoogle()" 
+              class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl shadow-md transition">
+        Sign in with Google
+      </button>
+    </div>
+
+    <div id="userSection" class="hidden mt-10">
+      <h2 class="text-2xl font-bold mb-4 text-center">Your Tasks</h2>
+
+      <div class="flex gap-2 mb-4">
+        <input id="taskInput" type="text" placeholder="Add a task..." 
+               class="flex-1 p-3 rounded-xl bg-white dark:bg-gray-800 text-black dark:text-white outline-none focus:ring-2 focus:ring-teal-400" />
+        <button onclick="addTask()" 
+                class="bg-teal-500 hover:bg-teal-400 text-white px-4 py-2 rounded-xl transition shadow">
+          Add
+        </button>
+      </div>
+
+      <ul id="userTaskList" class="space-y-3"></ul>
+
+      <button onclick="signOut()" 
+              class="mt-6 bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-xl shadow transition">
+        Logout
+      </button>
+    </div>
+  </div>
+
+  <!-- Click Sound -->
+  <audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-29.mp3" preload="auto"></audio>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
