@@ -1,4 +1,4 @@
-04.25 7:55 PM
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +11,24 @@
       darkMode: 'class',
     }
   </script>
+  <script type="module" src="script.js"></script>
 </head>
 <body class="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen transition-colors duration-500 px-4 py-8">
+  
+<!-- Auth Section -->
+<div id="authSection" class="text-center mt-10">
+  <button onclick="signInWithGoogle()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow">
+    Sign in with Google
+  </button>
+</div>
 
+<!-- After Login -->
+<div id="userSection" class="hidden text-center mt-6">
+  <p id="userName" class="text-lg font-semibold mb-2"></p>
+  <button onclick="signOut()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl shadow">
+    Sign out
+  </button>
+</div>
   <div class="max-w-xl mx-auto p-6 rounded-3xl shadow-2xl bg-gray-100 dark:bg-gray-900 relative">
     
     <!-- Theme toggle -->
