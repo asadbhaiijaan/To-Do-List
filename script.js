@@ -1,101 +1,45 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyCG48IFs2apvNkyFC_VrZhFAdWhwf9D12A",
-  authDomain: "to-do-list-9a2f4.firebaseapp.com",
-  projectId: "to-do-list-9a2f4",
-  storageBucket: "to-do-list-9a2f4.firebasestorage.app",
-  messagingSenderId: "906519457342",
-  appId: "1:906519457342:web:6b3a8eae8393653761ab6f",
-  measurementId: "G-E9JVNH20KS"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);  // Firebase Authentication
-
-// Sign In with Google function
-function signInWithGoogle() {
-  const provider = new GoogleAuthProvider();
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const user = result.user;
-      document.getElementById("userName").textContent = `Hello, ${user.displayName}!`;
-      document.getElementById("authSection").classList.add("hidden");
-      document.getElementById("userSection").classList.remove("hidden");
-    })
-    .catch((error) => {
-      console.error("Sign-in error:", error);
-    });
-}
-
-// Sign-out function
-function signOutUser() {
-  signOut(auth).then(() => {
-    document.getElementById("userSection").classList.add("hidden");
-    document.getElementById("authSection").classList.remove("hidden");
+// Function to load tasks from localStorage
+function loadTasks() {
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const taskList = document.getElementById("taskList");
+  taskList.innerHTML = '';  // Clear the list before re-rendering
+  tasks.forEach((task, index) => {
+    const li = document.createElement("li");
+    li.classList.add("p-3", "bg-gray-200", "dark:bg-gray-800", "rounded-lg", "shadow-md");
+    li.textContent = task;
+    taskList.appendChild(li);
   });
 }
 
-// Make functions global
-window.signInWithGoogle = signInWithGoogle;
-window.signOut = signOutUser;
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyCG48IFs2apvNkyFC_VrZhFAdWhwf9D12A",
-  authDomain: "to-do-list-9a2f4.firebaseapp.com",
-  projectId: "to-do-list-9a2f4",
-  storageBucket: "to-do-list-9a2f4.firebasestorage.app",
-  messagingSenderId: "906519457342",
-  appId: "1:906519457342:web:6b3a8eae8393653761ab6f",
-  measurementId: "G-E9JVNH20KS"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-// Sign-in with Google
-window.signInWithGoogle = function() {
-  const provider = new GoogleAuthProvider();
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const user = result.user;
-      document.getElementById("userName").textContent = `Hello, ${user.displayName}!`;
-      document.getElementById("authSection").classList.add("hidden");
-      document.getElementById("userSection").classList.remove("hidden");
-    })
-    .catch((error) => {
-      console.error("Sign-in error:", error);
-    });
-};
-
-// Sign-out function
-window.signOut = function() {
-  signOut(auth).then(() => {
-    document.getElementById("userSection").classList.add("hidden");
-    document.getElementById("authSection").classList.remove("hidden");
-  });
-};
-
-// Task adding function
-window.addTask = function() {
+// Function to add a task
+function addTask() {
   const taskInput = document.getElementById("taskInput");
   const task = taskInput.value.trim();
-
   if (task) {
-    const taskList = document.getElementById("userTaskList");
-    const taskItem = document.createElement("li");
-    taskItem.classList.add("p-3", "bg-gray-200", "dark:bg-gray-800", "rounded-lg", "shadow-md");
-    taskItem.textContent = task;
-    taskList.appendChild(taskItem);
-    taskInput.value = ""; // Clear the input after adding
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.push(task);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    taskInput.value = "";  // Clear input field
+    loadTasks();  // Reload tasks
   }
-};
+}
+
+// Function to clear all tasks
+function clearTasks() {
+  localStorage.removeItem("tasks");
+  loadTasks();  // Reload tasks
+}
+
+// Function to toggle light/dark mode
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  const icon = document.getElementById('themeIcon');
+  if (document.body.classList.contains('dark')) {
+    icon.textContent = '🌙';  // Dark mode icon
+  } else {
+    icon.textContent = '☀️';  // Light mode icon
+  }
+}
+
+// Load tasks when the page loads
+window.onload = loadTasks;
