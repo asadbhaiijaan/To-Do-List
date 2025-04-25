@@ -10,6 +10,46 @@ function loadTasks() {
     taskList.appendChild(li);
   });
 }
+function loadTasks() {
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const taskList = document.getElementById("taskList");
+  taskList.innerHTML = '';
+  tasks.forEach(task => {
+    const li = document.createElement("li");
+    li.classList.add("p-3", "bg-gray-200", "dark:bg-gray-800", "rounded-lg", "shadow-md");
+
+    // Final DateTime String
+    const fullDateTime = `${task.date} ${task.time}`;
+
+    li.innerHTML = `<span class="font-semibold">${task.text}</span><br>
+                    <span class="text-sm text-gray-500">Due: ${fullDateTime}</span>`;
+    taskList.appendChild(li);
+  });
+}
+
+function addTask() {
+  const taskInput = document.getElementById("taskInput");
+  const dateInput = document.getElementById("dateInput");
+  const timeInput = document.getElementById("timeInput");
+
+  const task = taskInput.value.trim();
+  const date = dateInput.value;
+  const time = timeInput.value;
+
+  if (task && date && time) {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.push({ text: task, date: date, time: time });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    taskInput.value = "";
+    dateInput.value = "";
+    timeInput.value = "";
+
+    loadTasks();
+  } else {
+    alert("Please fill task, date, and time.");
+  }
+}
 // Function to load tasks from localStorage
 function loadTasks() {
   const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
